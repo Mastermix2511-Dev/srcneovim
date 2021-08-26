@@ -58,57 +58,8 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
-lua require('formatter').setup(...)
 " Provided by setup function
 nnoremap <silent> <leader>f :Format<CR>
-
-require('formatter').setup({
-  logging = false,
-  filetype = {
-    javascript = {
-        -- prettier
-       function()
-          return {
-            exe = "prettier",
-            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
-            stdin = true
-          }
-        end
-    },
-    rust = {
-      -- Rustfmt
-      function()
-        return {
-          exe = "rustfmt",
-          args = {"--emit=stdout"},
-          stdin = true
-        }
-      end
-    },
-    lua = {
-        -- luafmt
-        function()
-          return {
-            exe = "luafmt",
-            args = {"--indent-count", 2, "--stdin"},
-            stdin = true
-          }
-        end
-    },
-    cpp = {
-        -- clang-format
-       function()
-          return {
-            exe = "clang-format",
-            args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-            stdin = true,
-            cwd = vim.fn.expand('%:p:h')  -- Run clang-format in cwd of the file.
-          }
-        end
-    }
-  }
-})
-
 
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
